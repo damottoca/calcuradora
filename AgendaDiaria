@@ -1,0 +1,45 @@
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Date;
+
+public class AgendaDiaria extends JFrame {
+    private JTextField compromissoField;
+    private JSpinner dataHoraSpinner;
+    private DefaultTableModel tableModel;
+    private JTable tabela;
+
+    public AgendaDiaria() {
+        setTitle("Agenda Diária");
+        setSize(500, 400);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
+
+        compromissoField = new JTextField(20);
+        dataHoraSpinner = new JSpinner(new SpinnerDateModel());
+        JSpinner.DateEditor dateEditor = new JSpinner.DateEditor(dataHoraSpinner, "dd/MM/yyyy HH:mm");
+        dataHoraSpinner.setEditor(dateEditor);
+
+        JButton adicionarButton = new JButton("Adicionar Compromisso");
+        adicionarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                adicionarCompromisso();
+            }
+        });
+
+        JButton removerButton = new JButton("Remover Compromisso");
+        removerButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                removerCompromisso();
+            }
+        });
+
+        tableModel = new DefaultTableModel(new Object[]{"Data/Hora", "Descrição"}, 0);
+        tabela = new JTable(tableModel);
+
+        JPanel panel = new JPanel();
+        panel.setLayout(new GridLayout(2,
