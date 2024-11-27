@@ -1,0 +1,70 @@
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class Calcuradora {
+
+        private JTextField texTela;
+        private JButton a0Button;
+        private JButton button2;
+        private JButton a2Button;
+        private JButton a1Button;
+        private JButton button7;
+        private JButton ACButton;
+        private JButton a8Button;
+        private JButton a7Button;
+        private JButton a5Button;
+        private JButton a4Button;
+        private JButton button8;
+        private JButton a9Button;
+        private JButton a6Button;
+        private JButton a3Button;
+        private JButton fecharButton;
+        private JButton button18;
+        private JButton xButton;
+        private JButton button20;
+        private JButton button21;
+        private JButton button22;
+        private JButton btnSomar;
+        private JButton btnSubtrair;
+        private JButton btnVezes;
+        private JButton btnResultado;
+        private JButton btnDivisao;
+        private JButton btnPorcentragem;
+        private JButton btnAC;
+        private JButton btnVirgula;
+        private JPanel panelTela;
+        private JPanel panelInferior;
+
+        public Calcuradora() {
+                btnSomar.addActionListener(new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+
+
+
+                        }
+                });
+                a1Button.addActionListener(new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+
+                                texTela.setText("1");
+
+                        }
+                });
+        }
+
+
+        public static void main(String[] args) {
+
+                JFrame frame = new JFrame("Calcuradora");
+                frame.setContentPane(new Calcuradora().panelTela);
+                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                frame.pack();
+                frame.setVisible(true);
+
+        }
+
+}
+
