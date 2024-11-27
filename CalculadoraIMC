@@ -1,0 +1,73 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class CalculadoraIMC extends JFrame {
+    private JTextField pesoField;
+    private JTextField alturaField;
+    private JLabel resultadoLabel;
+
+    public CalculadoraIMC() {
+        setTitle("Calculadora de IMC");
+        setSize(300, 200);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLayout(new GridLayout(4, 2));
+
+        // Componentes
+        JLabel pesoLabel = new JLabel("Peso (kg):");
+        pesoField = new JTextField();
+        JLabel alturaLabel = new JLabel("Altura (m):");
+        alturaField = new JTextField();
+        JButton calcularButton = new JButton("Calcular IMC");
+        resultadoLabel = new JLabel("");
+
+        // Adicionando componentes ao JFrame
+        add(pesoLabel);
+        add(pesoField);
+        add(alturaLabel);
+        add(alturaField);
+        add(calcularButton);
+        add(resultadoLabel);
+
+        // Ação do botão
+        calcularButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                calcularIMC();
+            }
+        });
+    }
+
+    private void calcularIMC() {
+        try {
+            double peso = Double.parseDouble(pesoField.getText());
+            double altura = Double.parseDouble(alturaField.getText());
+            double imc = peso / (altura * altura);
+            String categoria;
+
+            if (imc < 18.5) {
+                categoria = "Baixo peso";
+            } else if (imc < 24.9) {
+                categoria = "Normal";
+            } else if (imc < 29.9) {
+                categoria = "Sobrepeso";
+            } else {
+                categoria = "Obesidade";
+            }
+
+            resultadoLabel.setText(String.format("IMC: %.2f - %s", imc, categoria));
+        } catch (NumberFormatException ex) {
+            resultadoLabel.setText("Valores inválidos!");
+        }
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                new CalculadoraIMC().setVisible(true);
+            }
+        });
+    }
+}
