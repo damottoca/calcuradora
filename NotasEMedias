@@ -1,0 +1,82 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+
+public class AplicativoDeNotas extends JFrame {
+    private JTextField notaField;
+    private JTextArea listaDeNotas;
+    private JLabel mediaLabel;
+    private ArrayList<Double> notas;
+
+    public AplicativoDeNotas() {
+        setTitle("Aplicativo de Notas");
+        setSize(400, 300);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLayout(new BorderLayout());
+
+        notas = new ArrayList<>();
+
+        notaField = new JTextField(10);
+        JButton adicionarNotaButton = new JButton("Adicionar Nota");
+        listaDeNotas = new JTextArea(10, 30);
+        listaDeNotas.setEditable(false);
+        JButton calcularMediaButton = new JButton("Calcular Média");
+        mediaLabel = new JLabel("Média: ");
+
+        JPanel inputPanel = new JPanel();
+        inputPanel.add(new JLabel("Nota:"));
+        inputPanel.add(notaField);
+        inputPanel.add(adicionarNotaButton);
+
+        JPanel mediaPanel = new JPanel();
+        mediaPanel.add(calcularMediaButton);
+        mediaPanel.add(mediaLabel);
+
+        add(inputPanel, BorderLayout.NORTH);
+        add(new JScrollPane(listaDeNotas), BorderLayout.CENTER);
+        add(mediaPanel, BorderLayout.SOUTH);
+
+        adicionarNotaButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    double nota = Double.parseDouble(notaField.getText());
+                    notas.add(nota);
+                    listaDeNotas.append(nota + "\n");
+                    notaField.setText("");
+                } catch (NumberFormatException ex) {
+                    JOptionPane.showMessageDialog(AplicativoDeNotas.this, "Por favor, insira um número válido.");
+                }
+            }
+        });
+
+        calcularMediaButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (notas.isEmpty()) {
+                    JOptionPane.showMessageDialog(AplicativoDeNotas.this, "Nenhuma nota foi adicionada.");
+                    return;
+                }
+
+                double soma = 0;
+                for (double nota : notas) {
+                    soma += nota;
+                }
+                double media = soma / notas.size();
+                String status = media >= 7.0 ? "Aprovado" : "Reprovado";
+                mediaLabel.setText(String.format("Média: %.2f - %s", media, status));
+            }
+        });
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                new AplicativoDeNotas().setVisible(true);
+            }
+        });
+    }
+}
